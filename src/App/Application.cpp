@@ -1677,6 +1677,7 @@ static void freecadNewHandler ()
 // This function produces a stack backtrace with demangled function & method names.
 void printBacktrace(size_t skip=0)
 {
+#if BACKTRACE_PRESENT
     void *callstack[128];
     size_t nMaxFrames = sizeof(callstack) / sizeof(callstack[0]);
     size_t nFrames = backtrace(callstack, nMaxFrames);
@@ -1707,6 +1708,9 @@ void printBacktrace(size_t skip=0)
     }
 
     free(symbols);
+#else
+    std:cerr << "FreeCAD has not been compiled with backtrace support and thus some debug information is not available" << std::endl;
+#endif
 }
 #endif
 
